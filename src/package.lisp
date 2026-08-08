@@ -1,5 +1,5 @@
 (defpackage #:i18n-backend-icu
-  (:use #:cl #:i18n-protocol)
+  (:use #:cl #:cffi #:i18n-protocol)
   (:export #:icu-backend
            #:use-icu-backend
            #:*icu-backend*))
