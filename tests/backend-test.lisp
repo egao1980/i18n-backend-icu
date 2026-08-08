@@ -21,3 +21,10 @@
 
 (deftest available-locales-nonempty
   (ok (plusp (length (available-locales)))))
+
+(deftest catalog-icu-version
+  (ok (member :catalog (backend-capabilities *i18n-backend*)))
+  (let ((cat (load-catalog nil :locale "en")))
+    (ok (catalog-has-p cat "Version"))
+    (ok (stringp (catalog-get cat "Version")))
+    (ok (plusp (length (catalog-locales cat))))))

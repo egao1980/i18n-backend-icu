@@ -6,7 +6,7 @@
 (defvar *icu-backend* nil)
 
 (defmethod backend-capabilities ((backend icu-backend))
-  '(:locale :message :plural))
+  '(:locale :message :plural :catalog))
 
 (defun use-icu-backend (&optional (backend (or *icu-backend*
                                               (setf *icu-backend*
