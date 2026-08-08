@@ -1,22 +1,13 @@
 ;;;; Phase 1: install SUT dependency closure via cl-repository-client.
-;;;; Deps from ghcr.io/egao1980/cl-systems (OCI). QL only for unpublished.
+;;;; Deps from ghcr.io/egao1980/cl-systems (OCI).
+
+(setf *debugger-hook*
+      (lambda (c h)
+        (declare (ignore h))
+        (format *error-output* "~&UNHANDLED: ~A~%" c)
+        (uiop:quit 1)))
 
 (setf asdf:*compile-file-failure-behaviour* :warn)
-
-#+sbcl
-(setf *debugger-hook*
-      (lambda (c h)
-        (declare (ignore h))
-        (when (typep c 'sb-ext:defconstant-uneql)
-          (invoke-restart 'continue))
-        (format *error-output* "~&UNHANDLED: ~A~%" c)
-        (uiop:quit 1)))
-#-sbcl
-(setf *debugger-hook*
-      (lambda (c h)
-        (declare (ignore h))
-        (format *error-output* "~&UNHANDLED: ~A~%" c)
-        (uiop:quit 1)))
 
 (defun call-with-ci-muffles (fn)
   #+sbcl
