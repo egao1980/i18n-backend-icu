@@ -1,13 +1,18 @@
 (defsystem "i18n-backend-icu"
   :version "0.1.0"
-  :description "i18n-protocol backend over ICU4C (scaffold — bindings TODO)"
+  :description "i18n-protocol backend over cl-stack-icu (ICU4C + MF2 shim)"
   :author "egao1980"
   :license "MIT"
-  :depends-on ("i18n-protocol" "cffi")
+  :depends-on ("i18n-protocol" "cl-stack-icu" "cffi" "trivial-garbage")
   :serial t
   :pathname "src"
   :components ((:file "package")
-               (:file "backend"))
+               (:file "util")
+               (:file "backend")
+               (:file "locale")
+               (:file "message")
+               (:file "plural")
+               (:file "catalog"))
   :in-order-to ((test-op (test-op "i18n-backend-icu/tests"))))
 
 (defsystem "i18n-backend-icu/tests"

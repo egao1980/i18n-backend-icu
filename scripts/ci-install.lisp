@@ -1,4 +1,5 @@
 ;;;; Phase 1: install SUT dependency closure via cl-repository-client.
+;;;; Deps from ghcr.io/egao1980/cl-systems (OCI).
 
 (setf *debugger-hook*
       (lambda (c h)
@@ -10,10 +11,7 @@
 
 (defun call-with-ci-muffles (fn)
   #+sbcl
-  (handler-bind ((sb-ext:defconstant-uneql
-                  (lambda (c)
-                    (let ((r (find-restart 'continue c)))
-                      (when r (invoke-restart r))))))
+  (handler-bind ((sb-ext:defconstant-uneql #'continue))
     (funcall fn))
   #-sbcl
   (funcall fn))
@@ -25,8 +23,7 @@
 (call-with-ci-muffles
  (lambda ()
    (cl-repo:ensure-system-dependencies "i18n-backend-icu"
-     :also-tests t
-     :sources '(("rove" :ql)))))
+     :also-tests t)))
 
 (format t "~&; ci: install phase done~%")
 (uiop:quit 0)
