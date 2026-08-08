@@ -4,7 +4,7 @@
 ;;; SOURCE NIL/"" → ICU data; string → package name/path; pathname → namestring.
 
 (defun %catalog-ures (catalog)
-  (getf (i18n-protocol::catalog-raw catalog) :ures))
+  (getf (catalog-raw catalog) :ures))
 
 (defun %open-ures (package locale)
   (with-foreign-object (err :int)
@@ -92,6 +92,6 @@
         (setf (mem-ref err :int) (%zero-error))
         (let ((loc (cl-stack-icu:ures-get-locale-by-type ures 0 err))) ; ULOC_ACTUAL_LOCALE
           (remove nil
-                  (list (i18n-protocol::catalog-locale catalog)
+                  (list (catalog-locale catalog)
                         (when (and (cl-stack-icu:u-success-p (mem-ref err :int)) loc)
                           loc))))))))
