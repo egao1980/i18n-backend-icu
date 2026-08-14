@@ -31,6 +31,14 @@
   (let ((loc (accept-language "fr-FR,en;q=0.8")))
     (ok (string-equal (locale-language loc) "fr"))))
 
+(deftest accept-language-q-weights
+  (let ((loc (accept-language "en-US,en;q=0.8" :available '("fr" "en_GB" "de"))))
+    (ok (string-equal (locale-language loc) "en"))))
+
+(deftest accept-language-fallback-when-unavailable
+  (let ((loc (accept-language "xx-YY,en;q=0.1" :available '("en_US" "fr"))))
+    (ok (string-equal (locale-language loc) "en"))))
+
 ;;; --- plurals (CLDR) ---------------------------------------------------------
 
 (deftest plural-en-cardinal
