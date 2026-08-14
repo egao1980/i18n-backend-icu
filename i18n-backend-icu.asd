@@ -1,5 +1,5 @@
 (defsystem "i18n-backend-icu"
-  :version "0.1.0"
+  :version "0.1.1"
   :description "i18n-protocol backend over cl-stack-icu (ICU4C + MF2 shim)"
   :author "egao1980"
   :license "MIT"
